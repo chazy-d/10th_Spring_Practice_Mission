@@ -1,0 +1,53 @@
+package com.example.umc10th.domain.mission.entity;
+
+import com.example.umc10th.domain.member.entity.Member;
+import com.example.umc10th.domain.mission.enums.UserMissionStatus;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "user_mission")
+public class UserMission {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_mission_id")
+	private Long id;
+
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false, length = 30)
+	private UserMissionStatus status = UserMissionStatus.IN_PROGRESS;
+
+	@Column(name = "started_at", nullable = false)
+	private LocalDateTime startedAt;
+
+	@Column(name = "success_requested_at")
+	private LocalDateTime successRequestedAt;
+
+	@Column(name = "completed_at")
+	private LocalDateTime completedAt;
+
+	@Column(name = "rejected_at")
+	private LocalDateTime rejectedAt;
+
+	@Column(name = "canceled_at")
+	private LocalDateTime canceledAt;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "mission_id", nullable = false)
+	private Mission mission;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id", nullable = false)
+	private Member member;
+}

@@ -1,7 +1,8 @@
-package com.example.umc10th.domain.mission.entity;
+package com.example.umc10th.domain.point.entity;
 
 import com.example.umc10th.domain.member.entity.Member;
-import com.example.umc10th.domain.mission.enums.MemberMissionStatus;
+import com.example.umc10th.domain.point.enums.PointHistoryType;
+import com.example.umc10th.domain.point.enums.PointSourceType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,33 +17,36 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "member_mission")
-public class MemberMission {
+@Table(name = "point_history")
+public class PointHistory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "member_mission_id")
+	@Column(name = "point_history_id")
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 30)
-	private MemberMissionStatus status = MemberMissionStatus.IN_PROGRESS;
+	private PointHistoryType type;
 
-	@Column(name = "challenged_at", nullable = false)
-	private LocalDateTime challengedAt;
+	@Column(nullable = false)
+	private Integer amount;
 
-	@Column(name = "success_requested_at")
-	private LocalDateTime successRequestedAt;
+	@Column(name = "balance_after", nullable = false)
+	private Integer balanceAfter;
 
-	@Column(name = "completed_at")
-	private LocalDateTime completedAt;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "source_type", nullable = false, length = 30)
+	private PointSourceType sourceType;
 
-	@Column(name = "reviewed_at")
-	private LocalDateTime reviewedAt;
+	@Column(name = "source_id")
+	private Long sourceId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "mission_id", nullable = false)
-	private Mission mission;
+	@Column(length = 255)
+	private String description;
+
+	@Column(name = "created_at", nullable = false)
+	private LocalDateTime createdAt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)

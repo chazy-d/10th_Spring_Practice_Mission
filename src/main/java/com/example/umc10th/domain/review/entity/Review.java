@@ -1,6 +1,7 @@
 package com.example.umc10th.domain.review.entity;
 
 import com.example.umc10th.domain.member.entity.Member;
+import com.example.umc10th.domain.mission.entity.UserMission;
 import com.example.umc10th.domain.store.entity.Store;
 import com.example.umc10th.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
@@ -11,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 
@@ -27,7 +29,7 @@ public class Review extends BaseTimeEntity {
 	private String content;
 
 	@Column(nullable = false, precision = 2, scale = 1)
-	private BigDecimal star;
+	private BigDecimal rating;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "store_id", nullable = false)
@@ -36,6 +38,10 @@ public class Review extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_mission_id", nullable = false, unique = true)
+	private UserMission userMission;
 
 	public Long getId() {
 		return id;
@@ -46,6 +52,6 @@ public class Review extends BaseTimeEntity {
 	}
 
 	public BigDecimal getStar() {
-		return star;
+		return rating;
 	}
 }

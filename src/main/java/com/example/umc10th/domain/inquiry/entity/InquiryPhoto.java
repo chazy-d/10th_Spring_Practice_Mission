@@ -1,6 +1,6 @@
-package com.example.umc10th.domain.term.entity;
+package com.example.umc10th.domain.inquiry.entity;
 
-import com.example.umc10th.domain.member.entity.Member;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -11,18 +11,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "member_term")
-public class MemberTerm {
+@Table(name = "inquiry_photo")
+public class InquiryPhoto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long memberTermId;
+	@Column(name = "inquiry_photo_id")
+	private Long id;
+
+	@Column(name = "photo_url", nullable = false, length = 500)
+	private String photoUrl;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "term_id", nullable = false)
-	private Term term;
+	@JoinColumn(name = "inquiry_id", nullable = false)
+	private Inquiry inquiry;
 }

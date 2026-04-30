@@ -1,9 +1,10 @@
 package com.example.umc10th.domain.mission.enums;
 
-public enum MemberMissionStatus {
+public enum UserMissionStatus {
 	IN_PROGRESS,
 	SUCCESS_REQUESTED,
 	COMPLETED,
-	REVIEWED,
-	CANCELLED
+	REJECTED,
+	FAILED,
+	CANCELED
 }
