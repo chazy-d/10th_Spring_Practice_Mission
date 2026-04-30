@@ -1,5 +1,6 @@
-package com.example.umc10th.domain.mission.entity;
+package com.example.umc10th.domain.store.entity;
 
+import com.example.umc10th.domain.region.entity.Region;
 import com.example.umc10th.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,13 +24,13 @@ public class Store extends BaseTimeEntity {
 	@Column(nullable = false, length = 255)
 	private String name;
 
-	@Column(name = "manager_number", nullable = false)
-	private Long managerNumber;
+	@Column(name = "manager_number", nullable = false, length = 20)
+	private String managerNumber;
 
 	@Column(name = "detail_address", nullable = false, length = 255)
 	private String detailAddress;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "location_id", nullable = false)
-	private Location location;
+	@JoinColumn(name = "region_id", nullable = false)
+	private Region region;
 }

@@ -1,4 +1,4 @@
-package com.example.umc10th.domain.mission.entity;
+package com.example.umc10th.domain.region.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,12 +9,12 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "location")
-public class Location {
+@Table(name = "region")
+public class Region {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "location_id")
+	@Column(name = "region_id")
 	private Long id;
 
 	@Column(nullable = false, length = 100, unique = true)

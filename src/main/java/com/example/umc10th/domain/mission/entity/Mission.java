@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.mission.entity;
 
+import com.example.umc10th.domain.store.entity.Store;
 import com.example.umc10th.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
