@@ -1,9 +1,9 @@
 package com.example.umc10th.domain.member.entity;
 
-import com.example.umc10th.domain.member.entity.mapping.MemberFood;
-import com.example.umc10th.domain.member.entity.mapping.MemberTerm;
+import com.example.umc10th.domain.category.entity.mapping.MemberFoodCategory;
 import com.example.umc10th.domain.member.enums.Gender;
 import com.example.umc10th.domain.member.enums.SocialType;
+import com.example.umc10th.domain.term.entity.MemberTerm;
 import com.example.umc10th.global.entity.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -64,7 +64,7 @@ public class Member extends BaseTimeEntity {
 	private String profileUrl;
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
-	private List<MemberFood> memberFoods = new ArrayList<>();
+	private List<MemberFoodCategory> memberFoodCategories = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<MemberTerm> memberTerms = new ArrayList<>();

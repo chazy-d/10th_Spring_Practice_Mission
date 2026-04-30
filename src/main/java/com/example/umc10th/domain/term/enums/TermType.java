@@ -1,4 +1,4 @@
-package com.example.umc10th.domain.member.enums;
+package com.example.umc10th.domain.term.enums;
 
 public enum TermType {
 	AGE,

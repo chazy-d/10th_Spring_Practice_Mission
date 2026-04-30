@@ -1,6 +1,5 @@
-package com.example.umc10th.domain.member.entity.mapping;
+package com.example.umc10th.domain.term.entity;
 
-import com.example.umc10th.domain.member.entity.Food;
 import com.example.umc10th.domain.member.entity.Member;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,18 +11,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "member_food")
-public class MemberFood {
+@Table(name = "member_term")
+public class MemberTerm {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long memberFoodId;
+	private Long memberTermId;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "food_id", nullable = false)
-	private Food food;
+	@JoinColumn(name = "term_id", nullable = false)
+	private Term term;
 }

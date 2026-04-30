@@ -1,6 +1,6 @@
-package com.example.umc10th.domain.member.entity;
+package com.example.umc10th.domain.term.entity;
 
-import com.example.umc10th.domain.member.enums.FoodType;
+import com.example.umc10th.domain.term.enums.TermType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,15 +11,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "food")
-public class Food {
+@Table(name = "term")
+public class Term {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "food_id")
+	@Column(name = "term_id")
 	private Long id;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 20)
-	private FoodType name = FoodType.NONE;
+	private TermType name = TermType.SERVICE;
 }

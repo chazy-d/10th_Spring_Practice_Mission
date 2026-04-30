@@ -1,6 +1,6 @@
-package com.example.umc10th.domain.member.enums;
+package com.example.umc10th.domain.category.enums;
 
-public enum FoodType {
+public enum FoodCategoryType {
 	NONE,
 	KOREAN,
 	JAPANESE,
