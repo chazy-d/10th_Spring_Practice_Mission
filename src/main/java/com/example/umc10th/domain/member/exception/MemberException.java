@@ -1,17 +1,11 @@
 package com.example.umc10th.domain.member.exception;
 
-import com.example.umc10th.global.payload.ErrorCode;
+import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
+import com.example.umc10th.global.apiPayload.exception.ProjectException;
 
-public class MemberException extends RuntimeException {
+public class MemberException extends ProjectException {
 
-	private final ErrorCode errorCode;
-
-	public MemberException(ErrorCode errorCode) {
-		super(errorCode.getMessage());
-		this.errorCode = errorCode;
-	}
-
-	public ErrorCode getErrorCode() {
-		return errorCode;
+	public MemberException(BaseErrorCode errorCode) {
+		super(errorCode);
 	}
 }
