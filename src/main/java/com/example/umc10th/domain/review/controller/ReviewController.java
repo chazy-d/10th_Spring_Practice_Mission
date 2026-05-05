@@ -26,7 +26,7 @@ public class ReviewController {
 			1L,
 			request.reviewContent(),
 			request.starRating(),
-			request.images() == null ? List.of() : request.images(),
+			request.imageUrls() == null ? List.of() : request.imageUrls(),
 			LocalDateTime.now()
 		);
 

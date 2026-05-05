@@ -6,6 +6,6 @@ import java.util.List;
 public record ReviewRequestDto(
 	String reviewContent,
 	BigDecimal starRating,
-	List<String> images
+	List<String> imageUrls
 ) {
 }

@@ -11,7 +11,7 @@ public record ReviewResponseDto(
 	Long storeId,
 	String reviewContent,
 	BigDecimal starRating,
-	List<String> images,
+	List<String> imageUrls,
 	LocalDateTime createdAt
 ) {
 	public ReviewResponseDto(Long reviewId, String reviewContent, BigDecimal starRating) {
