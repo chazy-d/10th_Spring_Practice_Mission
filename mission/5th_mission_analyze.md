@@ -7,18 +7,18 @@
 
 화면 정의서에서 미션 성공 요청 후 `사장님 구분 번호`를 보여주는 흐름이 있었다.
 
-이 화면을 기준으로 보면 이 서비스의 미션은 단순 온라인 주문 기반 미션이라기보다, 사용자가 오프라인 매장에서 실제로 식사한 뒤 사장님에게 인증을 받는 구조에 가깝다고 생각되었다.
+이 화면을 기준으로 보면 이 서비스의 미션은 단순 온라인 주문 기반 미션이라기보다, 회원이 오프라인 매장에서 실제로 식사한 뒤 사장님에게 인증을 받는 구조에 가깝다고 생각되었다.
 
 따라서 기존의 `주문 기록(order)` 중심 설계보다, 다음 흐름이 더 자연스럽다고 판단했다.
 
 ```text  
-사용자 미션 도전  
+회원 미션 도전  
 -> 미션 성공 인증 요청  
 -> 인증 번호 생성  
 -> 사장님 확인  
--> 사용자 미션 완료 처리  
+-> 회원 미션 완료 처리  
 -> 포인트 지급  
--> 완료된 사용자 미션에 대해 리뷰 작성  
+-> 완료된 회원 미션에 대해 리뷰 작성  
 ```  
 
 화면 정의서만 보고 나에게 익숙한 배달 앱이라고 단정했던 것 같다. 그런데 식별 번호를 가져가고, 모든 미션에 리뷰하기가 달리는 형태를 보았을 때 이앱은 온라인이 아니라 오프라인을 겨냥하고 만들었다는 결론을 가지게 되었다.
@@ -33,7 +33,7 @@
 
 그래서 별도의 `order_history` 테이블은 최종 ERD에서 제외했다.
 
-### 2.2 미션과 사용자 미션을 분리
+### 2.2 미션과 회원 미션을 분리
 
 `mission`은 운영자가 만들어 둔 미션 원본이다.
 
@@ -45,7 +45,7 @@
 보상: 500P  
 ```  
 
-`user_mission`은 특정 사용자가 특정 미션에 도전한 기록이다.
+`member_mission`은 특정 회원이 특정 미션에 도전한 기록이다.
 
 예시:
 
@@ -54,13 +54,13 @@ member 1번이 mission 101번에 도전
 상태: IN_PROGRESS, SUCCESS_REQUESTED, COMPLETED 등  
 ```  
 
-이 둘을 분리해야 사용자의 진행 상태, 성공 요청 시각, 완료 시각, 취소/거절 상태를 안전하게 관리할 수 있다.
+이 둘을 분리해야 회원의 진행 상태, 성공 요청 시각, 완료 시각, 취소/거절 상태를 안전하게 관리할 수 있다.
 
 ### 2.3 성공 요청과 완료를 분리
 
-사용자가 "성공 요청" 버튼을 누르는 시점은 미션 완료가 아니다.
+회원이 "성공 요청" 버튼을 누르는 시점은 미션 완료가 아니다.
 
-성공 요청 시점에는 `user_mission.status`를 `SUCCESS_REQUESTED`로 변경하고, `user_mission_verification`에 인증 번호를 생성한다.
+성공 요청 시점에는 `member_mission.status`를 `SUCCESS_REQUESTED`로 변경하고, `member_mission_verification`에 인증 번호를 생성한다.
 
 실제 완료는 사장님이 인증 번호를 확인한 뒤 처리된다.
 
@@ -72,18 +72,18 @@ IN_PROGRESS
 
 포인트 지급은 `COMPLETED`가 되는 시점에 처리하는 것이 자연스럽다.
 
-### 2.4 리뷰는 가게 리뷰지만 사용자 미션과 1:1로 연결
+### 2.4 리뷰는 가게 리뷰지만 회원 미션과 1:1로 연결
 
 리뷰는 화면 진입 위치와 무관하게 가게에 달리는 리뷰다.
 
-다만 이 서비스에서는 리뷰 작성이 "실제로 미션을 완료한 사용자"에게만 허용되는 흐름으로 해석했다.
+다만 이 서비스에서는 리뷰 작성이 "실제로 미션을 완료한 회원"에게만 허용되는 흐름으로 해석했다.
 
-따라서 `review`는 `store_id`를 가진 가게 리뷰이면서, 동시에 `user_mission_id`를 필수로 가진다.
+따라서 `review`는 `store_id`를 가진 가게 리뷰이면서, 동시에 `member_mission_id`를 필수로 가진다.
 
 ```text  
 review.store_id          NOT NULL  
 review.member_id         NOT NULL  
-review.user_mission_id   NOT NULL UNIQUE  
+review.member_mission_id   NOT NULL UNIQUE  
 ```  
 
 이렇게 하면 하나의 완료 미션에 리뷰가 하나만 작성되도록 보장할 수 있다.
@@ -96,7 +96,7 @@ https://dbdiagram.io/d/69f2ff32c6a36f9c1bc70072
 
 ### member
 
-서비스 사용자 정보.
+서비스 회원 정보.
 
 Spring Security의 `User`와 이름 혼동을 줄이기 위해 도메인명은 `Member`를 사용한다.
 
@@ -118,9 +118,9 @@ Spring Security의 `User`와 이름 혼동을 줄이기 위해 도메인명은 `
 
 지역마다 목표 수와 보상 포인트가 다를 수 있으므로 `region`과 분리했다.
 
-### user_region_goal
+### member_region_goal
 
-사용자별, 지역별, 월별 목표 진행 상태.
+회원별, 지역별, 월별 목표 진행 상태.
 
 예시:
 
@@ -144,27 +144,27 @@ member 1번이 2026년 4월 오금동에서 7개 미션 완료
 
 가게가 제공하는 미션 원본.
 
-아직 특정 사용자에게 할당된 상태가 아니다.
+아직 특정 회원에게 할당된 상태가 아니다.
 
 홈 화면의 `missions`는 이 `mission` 기준의 도전 가능한 목록이다.
 
-### user_mission
+### member_mission
 
-사용자가 실제로 도전한 미션 기록.
+회원이 실제로 도전한 미션 기록.
 
 진행중, 성공 요청, 완료, 거절, 취소 등의 상태를 가진다.
 
-### user_mission_verification
+### member_mission_verification
 
 오프라인 인증 번호 정보.
 
-사용자가 미션 성공 요청을 하면 생성되고, 사장님이 확인하면 미션 완료 처리로 이어진다.
+회원이 미션 성공 요청을 하면 생성되고, 사장님이 확인하면 미션 완료 처리로 이어진다.
 
 ### review
 
 가게 리뷰.
 
-단, 완료된 사용자 미션과 1:1로 연결되어야 한다.
+단, 완료된 회원 미션과 1:1로 연결되어야 한다.
 
 ### review_photo
 
@@ -176,7 +176,7 @@ member 1번이 2026년 4월 오금동에서 7개 미션 완료
 
 리뷰 답글.
 
-일반 사용자 댓글보다는 사장님/관리자 답글 성격으로 해석했다.
+일반 회원 댓글보다는 사장님/관리자 답글 성격으로 해석했다.
 
 ### point_history
 
@@ -186,7 +186,7 @@ member 1번이 2026년 4월 오금동에서 7개 미션 완료
 
 ### notification, notification_setting
 
-새 미션, 리뷰 요청, 문의 답변 등의 알림 및 사용자별 알림 설정.
+새 미션, 리뷰 요청, 문의 답변 등의 알림 및 회원별 알림 설정.
 
 ### inquiry, inquiry_photo, inquiry_reply
 
@@ -202,45 +202,45 @@ member 1번이 2026년 4월 오금동에서 7개 미션 완료
 GET /api/home  
 ```  
 
-홈 화면의 미션 목록은 아직 사용자가 도전하기 전의 일반 `mission` 목록이다.
+홈 화면의 미션 목록은 아직 회원이 도전하기 전의 일반 `mission` 목록이다.
 
-따라서 `userMissionId`가 아니라 `missionId`를 내려준다.
+따라서 `memberMissionId`가 아니라 `missionId`를 내려준다.
 
-### 4.2 사용자 미션 목록 조회
+### 4.2 회원 미션 목록 조회
 
 ```http  
-GET /api/user-missions  
+GET /api/member-missions  
 ```  
 
-이 API는 사용자가 이미 도전한 미션 목록이다.
+이 API는 회원이 이미 도전한 미션 목록이다.
 
-따라서 `user_mission` 기준으로 조회하며 `userMissionId`, 상태, 도전 시각, 성공 요청 시각, 완료 시각 등을 내려준다.
+따라서 `member_mission` 기준으로 조회하며 `memberMissionId`, 상태, 도전 시각, 성공 요청 시각, 완료 시각 등을 내려준다.
 
 ### 4.3 미션 성공 인증 요청
 
 ```http  
-POST /api/user-missions/{userMissionId}/verifications  
+POST /api/member-missions/{memberMissionId}/verifications  
 ```  
 
-기존의 `PATCH /api/missions/{userMissionId}/success`보다 이 경로가 더 자연스럽다.
+기존의 `PATCH /api/missions/{memberMissionId}/success`보다 이 경로가 더 자연스럽다.
 
 이유:
 
-1. 대상 리소스가 일반 `mission`이 아니라 `user_mission`이다.
-2. 성공 요청 시 실제로 생성되는 데이터는 `user_mission_verification`이다.
+1. 대상 리소스가 일반 `mission`이 아니라 `member_mission`이다.
+2. 성공 요청 시 실제로 생성되는 데이터는 `member_mission_verification`이다.
 3. 인증 번호 생성이라는 하위 리소스 생성 행위이므로 `POST /verifications`가 적합하다.
 
 ### 4.4 리뷰 작성
 
 ```http  
-POST /api/user-missions/{userMissionId}/review  
+POST /api/member-missions/{memberMissionId}/review  
 ```  
 
-리뷰는 가게 리뷰지만, 이 서비스에서는 완료된 사용자 미션이 있어야 리뷰를 작성할 수 있다.
+리뷰는 가게 리뷰지만, 이 서비스에서는 완료된 회원 미션이 있어야 리뷰를 작성할 수 있다.
 
-따라서 `POST /api/stores/{storeId}/reviews`보다 `userMissionId` 기준이 더 안전하다.
+따라서 `POST /api/stores/{storeId}/reviews`보다 `memberMissionId` 기준이 더 안전하다.
 
-서버는 `userMission -> mission -> store` 관계를 통해 리뷰가 달릴 가게를 알 수 있다.
+서버는 `memberMission -> mission -> store` 관계를 통해 리뷰가 달릴 가게를 알 수 있다.
 
 ## 5. 코드 패키지 해석
 
@@ -276,3 +276,11 @@ domain/mission
 domain/member  
 domain/region  
 ```  
+
+## 6. 5주차 PR 리뷰 반영 리팩토링
+
+동료 PR 리뷰를 통해 네이밍 일관성에 대한 피드백을 받았다.
+
+프로젝트에서는 회원 도메인명을 `Member`로 사용하기로 했기 때문에, 기존에 남아 있던 `UserMission`, `UserRegionGoal`, `userMissionId`, `/api/user-missions` 등의 표현을 `MemberMission`, `MemberRegionGoal`, `memberMissionId`, `/api/member-missions` 기준으로 정리했다.
+
+또한 리뷰 이미지 요청 필드는 현재 `List<String>`으로 이미지 URL을 받는 구조이므로, 실제 파일 업로드처럼 보일 수 있는 `images`보다 의미가 명확한 `imageUrls`로 변경했다.
