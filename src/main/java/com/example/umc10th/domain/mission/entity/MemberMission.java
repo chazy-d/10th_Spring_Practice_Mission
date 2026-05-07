@@ -51,4 +51,20 @@ public class MemberMission extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
+
+	public Long getId() {
+		return id;
+	}
+
+	public MemberMissionStatus getStatus() {
+		return status;
+	}
+
+	public Mission getMission() {
+		return mission;
+	}
+
+	public Member getMember() {
+		return member;
+	}
 }

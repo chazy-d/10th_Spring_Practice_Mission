@@ -62,6 +62,10 @@ public class Mission extends BaseTimeEntity {
 		return rewardPoint;
 	}
 
+	public Store getStore() {
+		return store;
+	}
+
 	public enum VerificationType {
 		OWNER_CONFIRM,
 		AUTO,

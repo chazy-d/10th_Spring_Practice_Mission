@@ -26,4 +26,20 @@ public class ReviewPhoto extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "review_id", nullable = false)
 	private Review review;
+
+	protected ReviewPhoto() {
+	}
+
+	private ReviewPhoto(String photoUrl, Review review) {
+		this.photoUrl = photoUrl;
+		this.review = review;
+	}
+
+	public static ReviewPhoto create(String photoUrl, Review review) {
+		return new ReviewPhoto(photoUrl, review);
+	}
+
+	public String getPhotoUrl() {
+		return photoUrl;
+	}
 }

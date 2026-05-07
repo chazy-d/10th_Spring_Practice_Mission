@@ -42,4 +42,8 @@ public class Store extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "primary_food_category_id")
 	private FoodCategory primaryFoodCategory;
+
+	public Long getId() {
+		return id;
+	}
 }
