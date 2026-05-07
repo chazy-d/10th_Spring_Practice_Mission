@@ -66,6 +66,10 @@ public class Mission extends BaseTimeEntity {
 		return store;
 	}
 
+	public LocalDateTime getEndedAt() {
+		return endedAt;
+	}
+
 	public enum VerificationType {
 		OWNER_CONFIRM,
 		AUTO,

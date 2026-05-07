@@ -67,4 +67,16 @@ public class MemberMission extends BaseTimeEntity {
 	public Member getMember() {
 		return member;
 	}
+
+	public LocalDateTime getStartedAt() {
+		return startedAt;
+	}
+
+	public LocalDateTime getSuccessRequestedAt() {
+		return successRequestedAt;
+	}
+
+	public LocalDateTime getCompletedAt() {
+		return completedAt;
+	}
 }
