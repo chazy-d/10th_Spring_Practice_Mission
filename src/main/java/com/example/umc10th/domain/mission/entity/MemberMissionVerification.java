@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.mission.entity;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.mission.enums.MemberMissionVerificationStatus;
 import com.example.umc10th.domain.store.entity.StoreOwner;
 import jakarta.persistence.Column;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member_mission_verification")
-public class MemberMissionVerification {
+public class MemberMissionVerification extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

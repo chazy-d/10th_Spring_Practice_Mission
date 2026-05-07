@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.member.entity;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.region.entity.Region;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "member_address")
-public class MemberAddress {
+public class MemberAddress extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

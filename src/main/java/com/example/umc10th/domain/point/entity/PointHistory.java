@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.point.entity;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.member.entity.Member;
 import com.example.umc10th.domain.point.enums.PointHistoryType;
 import com.example.umc10th.domain.point.enums.PointSourceType;
@@ -14,11 +15,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "point_history")
-public class PointHistory {
+public class PointHistory extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,9 +44,6 @@ public class PointHistory {
 
 	@Column(length = 255)
 	private String description;
-
-	@Column(name = "created_at", nullable = false)
-	private LocalDateTime createdAt;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)

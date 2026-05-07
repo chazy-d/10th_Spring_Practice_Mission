@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.notification.entity;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.member.entity.Member;
 import com.example.umc10th.domain.notification.enums.NotificationType;
 import jakarta.persistence.Column;
@@ -16,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "notification_setting")
-public class NotificationSetting {
+public class NotificationSetting extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

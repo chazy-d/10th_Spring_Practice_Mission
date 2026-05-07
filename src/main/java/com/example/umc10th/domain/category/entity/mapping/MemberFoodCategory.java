@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.category.entity.mapping;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.category.entity.FoodCategory;
 import com.example.umc10th.domain.member.entity.Member;
 import jakarta.persistence.Entity;
@@ -13,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "member_food_category")
-public class MemberFoodCategory {
+public class MemberFoodCategory extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

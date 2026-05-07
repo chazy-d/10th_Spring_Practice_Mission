@@ -1,5 +1,6 @@
 package com.example.umc10th.domain.store.entity;
 
+import com.example.umc10th.global.entity.BaseTimeEntity;
 import com.example.umc10th.domain.store.enums.DayOfWeekType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,7 +17,7 @@ import java.time.LocalTime;
 
 @Entity
 @Table(name = "store_business_hour")
-public class StoreBusinessHour {
+public class StoreBusinessHour extends BaseTimeEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
