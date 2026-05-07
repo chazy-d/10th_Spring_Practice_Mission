@@ -38,4 +38,8 @@ public class MemberRegionGoal extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_goal_id", nullable = false)
 	private RegionGoal regionGoal;
+
+	public Integer getCompletedMissionCount() {
+		return completedMissionCount;
+	}
 }

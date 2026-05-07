@@ -20,4 +20,11 @@ public class Region extends BaseTimeEntity {
 	@Column(nullable = false, length = 100, unique = true)
 	private String name;
 
+	public Long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
 }
