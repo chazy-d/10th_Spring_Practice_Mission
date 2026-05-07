@@ -19,6 +19,11 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public MemberResponseDto getMember(Long memberId) {
+		return getMyPage(memberId);
+	}
+
+	@Override
+	public MemberResponseDto getMyPage(Long memberId) {
 		return memberRepository.findById(memberId)
 			.map(memberConverter::toResponse)
 			.orElseThrow(() -> new MemberException(MemberErrorCode.MEMBER_NOT_FOUND));

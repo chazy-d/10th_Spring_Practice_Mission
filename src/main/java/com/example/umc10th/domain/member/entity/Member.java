@@ -31,6 +31,9 @@ public class Member extends BaseTimeEntity {
 	@Column(nullable = false, length = 50)
 	private String name;
 
+	@Column(nullable = false, length = 50)
+	private String nickname;
+
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false, length = 10)
 	private Gender gender = Gender.NONE;
@@ -53,6 +56,9 @@ public class Member extends BaseTimeEntity {
 	@Column(name = "phone_number", length = 20)
 	private String phoneNumber;
 
+	@Column(name = "profile_image_url", length = 500)
+	private String profileImageUrl;
+
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<MemberFoodCategory> memberFoodCategories = new ArrayList<>();
 
@@ -67,7 +73,23 @@ public class Member extends BaseTimeEntity {
 		return name;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
 	public String getEmail() {
 		return email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public Integer getPoint() {
+		return point;
+	}
+
+	public String getProfileImageUrl() {
+		return profileImageUrl;
 	}
 }
