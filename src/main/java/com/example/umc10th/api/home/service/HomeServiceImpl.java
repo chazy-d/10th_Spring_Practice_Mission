@@ -27,6 +27,9 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class HomeServiceImpl implements HomeService {
 
+	private static final int DEFAULT_GOAL_MISSION_COUNT = 10;
+	private static final int DEFAULT_REGION_REWARD_POINT = 1000;
+
 	private static final List<MemberMissionStatus> IN_PROGRESS_STATUSES = List.of(
 		MemberMissionStatus.IN_PROGRESS,
 		MemberMissionStatus.SUCCESS_REQUESTED
@@ -63,8 +66,8 @@ public class HomeServiceImpl implements HomeService {
 
 		RegionGoal regionGoal = regionGoalRepository.findByRegionIdAndTargetMonth(regionId, YearMonth.now())
 			.orElse(null);
-		Integer goalMissionCount = regionGoal == null ? 0 : regionGoal.getGoalMissionCount();
-		Integer rewardPoint = regionGoal == null ? 0 : regionGoal.getRewardPoint();
+		Integer goalMissionCount = regionGoal == null ? DEFAULT_GOAL_MISSION_COUNT : regionGoal.getGoalMissionCount();
+		Integer rewardPoint = regionGoal == null ? DEFAULT_REGION_REWARD_POINT : regionGoal.getRewardPoint();
 		Integer completedMissionCount = getCompletedMissionCount(memberId, regionGoal);
 
 		List<Mission> missions = missionRepository.findAvailableMissionsWithCursor(
