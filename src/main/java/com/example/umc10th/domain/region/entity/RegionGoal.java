@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import java.time.YearMonth;
 import java.time.LocalDateTime;
 
 @Entity
@@ -22,7 +23,7 @@ public class RegionGoal extends BaseTimeEntity {
 	private Long id;
 
 	@Column(name = "target_month", nullable = false, length = 7)
-	private String targetMonth;
+	private YearMonth targetMonth;
 
 	@Column(name = "goal_mission_count", nullable = false)
 	private Integer goalMissionCount;
