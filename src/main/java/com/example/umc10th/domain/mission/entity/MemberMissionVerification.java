@@ -13,7 +13,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -45,8 +44,8 @@ public class MemberMissionVerification extends BaseTimeEntity {
 	@Column(name = "rejected_at")
 	private LocalDateTime rejectedAt;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_mission_id", nullable = false, unique = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_mission_id", nullable = false)
 	private MemberMission memberMission;
 
 	@ManyToOne(fetch = FetchType.LAZY)
