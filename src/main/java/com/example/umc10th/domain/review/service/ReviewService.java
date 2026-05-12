@@ -3,6 +3,7 @@ package com.example.umc10th.domain.review.service;
 import com.example.umc10th.domain.review.dto.ReviewListResponseDto;
 import com.example.umc10th.domain.review.dto.ReviewRequestDto;
 import com.example.umc10th.domain.review.dto.ReviewResponseDto;
+import com.example.umc10th.domain.review.enums.ReviewSortType;
 
 public interface ReviewService {
 
@@ -10,5 +11,5 @@ public interface ReviewService {
 
 	ReviewResponseDto createReview(Long memberMissionId, ReviewRequestDto request);
 
-	ReviewListResponseDto getMyReviewsByIdCursor(Long memberId, Long cursor, Integer size);
+	ReviewListResponseDto getMyReviews(Long memberId, ReviewSortType sort, String cursor, Integer size);
 }

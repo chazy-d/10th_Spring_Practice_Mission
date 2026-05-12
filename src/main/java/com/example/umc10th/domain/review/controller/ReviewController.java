@@ -3,6 +3,7 @@ package com.example.umc10th.domain.review.controller;
 import com.example.umc10th.domain.review.dto.ReviewListResponseDto;
 import com.example.umc10th.domain.review.dto.ReviewRequestDto;
 import com.example.umc10th.domain.review.dto.ReviewResponseDto;
+import com.example.umc10th.domain.review.enums.ReviewSortType;
 import com.example.umc10th.domain.review.exception.code.ReviewSuccessCode;
 import com.example.umc10th.domain.review.service.ReviewService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
@@ -35,10 +36,11 @@ public class ReviewController {
 	@GetMapping("/api/reviews/my")
 	public ApiResponse<ReviewListResponseDto> getMyReviews(
 		@RequestParam Long memberId,
-		@RequestParam(required = false) Long cursor,
+		@RequestParam(defaultValue = "ID") ReviewSortType sort,
+		@RequestParam(required = false) String cursor,
 		@RequestParam(defaultValue = "10") Integer size
 	) {
-		ReviewListResponseDto response = reviewService.getMyReviewsByIdCursor(memberId, cursor, size);
+		ReviewListResponseDto response = reviewService.getMyReviews(memberId, sort, cursor, size);
 
 		return ApiResponse.onSuccess(ReviewSuccessCode.MY_REVIEW_LIST_FOUND, response);
 	}

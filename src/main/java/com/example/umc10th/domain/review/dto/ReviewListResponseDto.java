@@ -7,7 +7,7 @@ import java.util.List;
 public record ReviewListResponseDto(
 	List<ReviewSummaryDto> reviews,
 	Integer size,
-	Long nextCursor,
+	String nextCursor,
 	Boolean hasNext
 ) {
 	public record ReviewSummaryDto(
