@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 
 	private final MemberRepository memberRepository;
-	private final MemberConverter memberConverter = new MemberConverter();
+	private final MemberConverter memberConverter;
 
-	public MemberServiceImpl(MemberRepository memberRepository) {
+	public MemberServiceImpl(MemberRepository memberRepository, MemberConverter memberConverter) {
 		this.memberRepository = memberRepository;
+		this.memberConverter = memberConverter;
 	}
 
 	@Override

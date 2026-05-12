@@ -4,7 +4,9 @@ import com.example.umc10th.api.home.dto.HomeResponseDto;
 import com.example.umc10th.domain.mission.entity.Mission;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import org.springframework.stereotype.Component;
 
+@Component
 public class HomeConverter {
 
 	public HomeResponseDto.HomeMissionDto toHomeMissionDto(Mission mission) {

@@ -5,7 +5,9 @@ import com.example.umc10th.domain.mission.entity.MemberMission;
 import com.example.umc10th.domain.mission.entity.Mission;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import org.springframework.stereotype.Component;
 
+@Component
 public class MemberMissionConverter {
 
 	public MemberMissionListResponseDto.MemberMissionSummaryDto toSummary(MemberMission memberMission) {

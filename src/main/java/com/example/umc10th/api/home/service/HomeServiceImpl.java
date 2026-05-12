@@ -40,20 +40,22 @@ public class HomeServiceImpl implements HomeService {
 	private final RegionGoalRepository regionGoalRepository;
 	private final MemberRegionGoalRepository memberRegionGoalRepository;
 	private final MissionRepository missionRepository;
-	private final HomeConverter homeConverter = new HomeConverter();
+	private final HomeConverter homeConverter;
 
 	public HomeServiceImpl(
 		MemberRepository memberRepository,
 		RegionRepository regionRepository,
 		RegionGoalRepository regionGoalRepository,
 		MemberRegionGoalRepository memberRegionGoalRepository,
-		MissionRepository missionRepository
+		MissionRepository missionRepository,
+		HomeConverter homeConverter
 	) {
 		this.memberRepository = memberRepository;
 		this.regionRepository = regionRepository;
 		this.regionGoalRepository = regionGoalRepository;
 		this.memberRegionGoalRepository = memberRegionGoalRepository;
 		this.missionRepository = missionRepository;
+		this.homeConverter = homeConverter;
 	}
 
 	@Override

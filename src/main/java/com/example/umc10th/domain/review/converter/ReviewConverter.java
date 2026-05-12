@@ -5,7 +5,9 @@ import com.example.umc10th.domain.review.dto.ReviewResponseDto;
 import com.example.umc10th.domain.review.entity.Review;
 import com.example.umc10th.domain.review.dto.ReviewRequestDto;
 import java.util.List;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ReviewConverter {
 
 	public Review toReview(MemberMission memberMission, ReviewRequestDto request) {

@@ -12,10 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class MissionServiceImpl implements MissionService {
 
 	private final MissionRepository missionRepository;
-	private final MissionConverter missionConverter = new MissionConverter();
+	private final MissionConverter missionConverter;
 
-	public MissionServiceImpl(MissionRepository missionRepository) {
+	public MissionServiceImpl(MissionRepository missionRepository, MissionConverter missionConverter) {
 		this.missionRepository = missionRepository;
+		this.missionConverter = missionConverter;
 	}
 
 	@Override

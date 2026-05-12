@@ -18,14 +18,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 	private final ReviewRepository reviewRepository;
 	private final MemberMissionRepository memberMissionRepository;
-	private final ReviewConverter reviewConverter = new ReviewConverter();
+	private final ReviewConverter reviewConverter;
 
 	public ReviewServiceImpl(
 		ReviewRepository reviewRepository,
-		MemberMissionRepository memberMissionRepository
+		MemberMissionRepository memberMissionRepository,
+		ReviewConverter reviewConverter
 	) {
 		this.reviewRepository = reviewRepository;
 		this.memberMissionRepository = memberMissionRepository;
+		this.reviewConverter = reviewConverter;
 	}
 
 	@Override

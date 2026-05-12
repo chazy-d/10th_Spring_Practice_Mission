@@ -15,10 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class MemberMissionServiceImpl implements MemberMissionService {
 
 	private final MemberMissionRepository memberMissionRepository;
-	private final MemberMissionConverter memberMissionConverter = new MemberMissionConverter();
+	private final MemberMissionConverter memberMissionConverter;
 
-	public MemberMissionServiceImpl(MemberMissionRepository memberMissionRepository) {
+	public MemberMissionServiceImpl(
+		MemberMissionRepository memberMissionRepository,
+		MemberMissionConverter memberMissionConverter
+	) {
 		this.memberMissionRepository = memberMissionRepository;
+		this.memberMissionConverter = memberMissionConverter;
 	}
 
 	@Override
