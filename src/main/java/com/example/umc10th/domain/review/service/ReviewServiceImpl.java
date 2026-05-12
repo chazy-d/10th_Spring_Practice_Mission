@@ -3,6 +3,7 @@ package com.example.umc10th.domain.review.service;
 import com.example.umc10th.domain.mission.entity.MemberMission;
 import com.example.umc10th.domain.mission.enums.MemberMissionStatus;
 import com.example.umc10th.domain.mission.repository.MemberMissionRepository;
+import com.example.umc10th.domain.review.dto.ReviewListResponseDto;
 import com.example.umc10th.domain.review.dto.ReviewRequestDto;
 import com.example.umc10th.domain.review.converter.ReviewConverter;
 import com.example.umc10th.domain.review.dto.ReviewResponseDto;
@@ -10,6 +11,8 @@ import com.example.umc10th.domain.review.entity.Review;
 import com.example.umc10th.domain.review.exception.ReviewException;
 import com.example.umc10th.domain.review.exception.code.ReviewErrorCode;
 import com.example.umc10th.domain.review.repository.ReviewRepository;
+import java.util.List;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,5 +59,30 @@ public class ReviewServiceImpl implements ReviewService {
 		Review savedReview = reviewRepository.save(review);
 
 		return reviewConverter.toResponse(savedReview);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ReviewListResponseDto getMyReviewsByIdCursor(Long memberId, Long cursor, Integer size) {
+		List<Review> reviews = reviewRepository.findMyReviewsByIdCursor(
+			memberId,
+			cursor,
+			PageRequest.of(0, size + 1)
+		);
+
+		boolean hasNext = reviews.size() > size;
+		List<Review> responseReviews = hasNext ? reviews.subList(0, size) : reviews;
+		Long nextCursor = hasNext && !responseReviews.isEmpty()
+			? responseReviews.get(responseReviews.size() - 1).getId()
+			: null;
+
+		return new ReviewListResponseDto(
+			responseReviews.stream()
+				.map(reviewConverter::toSummary)
+				.toList(),
+			size,
+			nextCursor,
+			hasNext
+		);
 	}
 }
