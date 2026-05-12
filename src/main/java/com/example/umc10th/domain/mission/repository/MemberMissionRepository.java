@@ -3,8 +3,9 @@ package com.example.umc10th.domain.mission.repository;
 import com.example.umc10th.domain.mission.entity.MemberMission;
 import com.example.umc10th.domain.mission.enums.MemberMissionStatus;
 import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -24,6 +25,28 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 		@Param("memberId") Long memberId,
 		@Param("statuses") List<MemberMissionStatus> statuses,
 		@Param("cursor") Long cursor,
+		Pageable pageable
+	);
+
+	@Query(
+		value = """
+			select mm
+			from MemberMission mm
+			join fetch mm.mission m
+			join fetch m.store s
+			where mm.member.id = :memberId
+				and mm.status in :statuses
+			""",
+		countQuery = """
+			select count(mm)
+			from MemberMission mm
+			where mm.member.id = :memberId
+				and mm.status in :statuses
+			"""
+	)
+	Page<MemberMission> findByMemberAndStatusesWithOffset(
+		@Param("memberId") Long memberId,
+		@Param("statuses") List<MemberMissionStatus> statuses,
 		Pageable pageable
 	);
 }
