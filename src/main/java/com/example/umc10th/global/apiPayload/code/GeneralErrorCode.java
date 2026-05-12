@@ -1,7 +1,9 @@
 package com.example.umc10th.global.apiPayload.code;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum GeneralErrorCode implements BaseErrorCode {
 	BAD_REQUEST(HttpStatus.BAD_REQUEST, "COMMON400", "잘못된 요청입니다."),
 	UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "COMMON401", "인증이 필요합니다."),
@@ -18,20 +20,5 @@ public enum GeneralErrorCode implements BaseErrorCode {
 		this.status = status;
 		this.code = code;
 		this.message = message;
-	}
-
-	@Override
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	@Override
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessage() {
-		return message;
 	}
 }

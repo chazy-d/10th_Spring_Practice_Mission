@@ -1,8 +1,10 @@
 package com.example.umc10th.domain.mission.exception.code;
 
 import com.example.umc10th.global.apiPayload.code.BaseSuccessCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum MissionSuccessCode implements BaseSuccessCode {
 	HOME_FOUND(HttpStatus.OK, "HOME200_1", "홈 화면 조회에 성공했습니다."),
 	MEMBER_MISSION_LIST_FOUND(HttpStatus.OK, "MEMBER_MISSION200_1", "회원 미션 목록 조회에 성공했습니다."),
@@ -16,20 +18,5 @@ public enum MissionSuccessCode implements BaseSuccessCode {
 		this.status = status;
 		this.code = code;
 		this.message = message;
-	}
-
-	@Override
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	@Override
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessage() {
-		return message;
 	}
 }

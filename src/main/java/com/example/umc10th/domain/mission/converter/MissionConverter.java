@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component;
 public class MissionConverter {
 
 	public MissionResponseDto toResponse(Mission mission) {
-		return new MissionResponseDto(mission.getId(), mission.getConditionText(), mission.getRewardPoint());
+		return new MissionResponseDto(mission.getId(), mission.getContent(), mission.getRewardPoint());
 	}
 }

@@ -1,8 +1,10 @@
 package com.example.umc10th.domain.mission.exception.code;
 
 import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum MissionErrorCode implements BaseErrorCode {
 	MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "MISSION404", "미션을 찾을 수 없습니다.");
 
@@ -14,20 +16,5 @@ public enum MissionErrorCode implements BaseErrorCode {
 		this.status = status;
 		this.code = code;
 		this.message = message;
-	}
-
-	@Override
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	@Override
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessage() {
-		return message;
 	}
 }

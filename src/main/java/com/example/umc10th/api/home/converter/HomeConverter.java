@@ -14,7 +14,7 @@ public class HomeConverter {
 			mission.getId(),
 			mission.getStore().getId(),
 			mission.getStore().getName(),
-			mission.getConditionText(),
+			mission.getContent(),
 			mission.getRewardPoint(),
 			calculateDaysRemaining(mission)
 		);

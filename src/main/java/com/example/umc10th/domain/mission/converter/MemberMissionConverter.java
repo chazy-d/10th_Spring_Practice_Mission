@@ -18,7 +18,7 @@ public class MemberMissionConverter {
 			mission.getId(),
 			mission.getStore().getId(),
 			mission.getStore().getName(),
-			mission.getConditionText(),
+			mission.getContent(),
 			mission.getRewardPoint(),
 			memberMission.getStatus(),
 			memberMission.getStartedAt(),

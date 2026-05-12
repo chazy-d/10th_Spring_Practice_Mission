@@ -52,10 +52,6 @@ public class Mission extends BaseTimeEntity {
 	@JoinColumn(name = "store_id", nullable = false)
 	private Store store;
 
-	public String getConditionText() {
-		return content;
-	}
-
 	public enum VerificationType {
 		OWNER_CONFIRM,
 		AUTO,

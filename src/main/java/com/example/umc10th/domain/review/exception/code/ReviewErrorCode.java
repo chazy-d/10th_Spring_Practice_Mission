@@ -1,8 +1,10 @@
 package com.example.umc10th.domain.review.exception.code;
 
 import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
+@Getter
 public enum ReviewErrorCode implements BaseErrorCode {
 	REVIEW_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW404", "리뷰를 찾을 수 없습니다."),
 	MEMBER_MISSION_NOT_FOUND(HttpStatus.NOT_FOUND, "REVIEW404_1", "리뷰를 작성할 회원 미션을 찾을 수 없습니다."),
@@ -17,20 +19,5 @@ public enum ReviewErrorCode implements BaseErrorCode {
 		this.status = status;
 		this.code = code;
 		this.message = message;
-	}
-
-	@Override
-	public HttpStatus getStatus() {
-		return status;
-	}
-
-	@Override
-	public String getCode() {
-		return code;
-	}
-
-	@Override
-	public String getMessage() {
-		return message;
 	}
 }
