@@ -7,6 +7,7 @@ import com.example.umc10th.domain.review.enums.ReviewSortType;
 import com.example.umc10th.domain.review.exception.code.ReviewSuccessCode;
 import com.example.umc10th.domain.review.service.ReviewService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,7 @@ public class ReviewController {
 	@PostMapping("/api/member-missions/{memberMissionId}/review")
 	public ApiResponse<ReviewResponseDto> createReview(
 		@PathVariable Long memberMissionId,
-		@RequestBody ReviewRequestDto request
+		@Valid @RequestBody ReviewRequestDto request
 	) {
 		ReviewResponseDto response = reviewService.createReview(memberMissionId, request);
 

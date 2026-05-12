@@ -7,6 +7,7 @@ import com.example.umc10th.domain.mission.enums.MemberMissionStatus;
 import com.example.umc10th.domain.mission.exception.code.MissionSuccessCode;
 import com.example.umc10th.domain.mission.service.MemberMissionService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,7 +37,7 @@ public class MemberMissionQueryController {
 
 	@PostMapping("/api/member-missions/in-progress")
 	public ApiResponse<MemberMissionOffsetPageResponseDto> getInProgressMemberMissions(
-		@RequestBody MemberMissionInProgressRequestDto request,
+		@Valid @RequestBody MemberMissionInProgressRequestDto request,
 		@RequestParam(defaultValue = "0") Integer pageNumber,
 		@RequestParam(defaultValue = "10") Integer pageSize
 	) {
