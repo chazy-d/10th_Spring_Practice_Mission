@@ -83,7 +83,7 @@ public class Review extends BaseTimeEntity {
 		return content;
 	}
 
-	public BigDecimal getStar() {
+	public BigDecimal getRating() {
 		return rating;
 	}
 

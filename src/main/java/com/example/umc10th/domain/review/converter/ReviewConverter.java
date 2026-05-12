@@ -30,7 +30,7 @@ public class ReviewConverter {
 			review.getMemberMission().getMission().getId(),
 			review.getStore().getId(),
 			review.getContent(),
-			review.getStar(),
+			review.getRating(),
 			review.getImageUrls(),
 			review.getCreatedAt()
 		);
