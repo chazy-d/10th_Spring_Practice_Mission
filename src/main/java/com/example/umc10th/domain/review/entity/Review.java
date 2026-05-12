@@ -19,7 +19,9 @@ import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "review")
 public class Review extends BaseTimeEntity {
@@ -73,26 +75,6 @@ public class Review extends BaseTimeEntity {
 
 	public void addPhoto(String imageUrl) {
 		reviewPhotos.add(ReviewPhoto.create(imageUrl, this));
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public BigDecimal getRating() {
-		return rating;
-	}
-
-	public MemberMission getMemberMission() {
-		return memberMission;
-	}
-
-	public Store getStore() {
-		return store;
 	}
 
 	public List<String> getImageUrls() {

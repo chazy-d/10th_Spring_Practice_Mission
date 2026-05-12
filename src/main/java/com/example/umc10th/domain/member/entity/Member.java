@@ -18,7 +18,9 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "member")
 public class Member extends BaseTimeEntity {
@@ -64,32 +66,4 @@ public class Member extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<MemberTermAgreement> memberTermAgreements = new ArrayList<>();
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public Integer getPoint() {
-		return point;
-	}
-
-	public String getProfileImageUrl() {
-		return profileImageUrl;
-	}
 }

@@ -15,7 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "notification")
 public class Notification extends BaseTimeEntity {

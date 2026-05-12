@@ -7,7 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "region")
 public class Region extends BaseTimeEntity {
@@ -19,12 +21,4 @@ public class Region extends BaseTimeEntity {
 
 	@Column(nullable = false, length = 100, unique = true)
 	private String name;
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
 }

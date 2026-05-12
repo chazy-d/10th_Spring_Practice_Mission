@@ -10,7 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "review_photo")
 public class ReviewPhoto extends BaseTimeEntity {
@@ -37,9 +39,5 @@ public class ReviewPhoto extends BaseTimeEntity {
 
 	public static ReviewPhoto create(String photoUrl, Review review) {
 		return new ReviewPhoto(photoUrl, review);
-	}
-
-	public String getPhotoUrl() {
-		return photoUrl;
 	}
 }

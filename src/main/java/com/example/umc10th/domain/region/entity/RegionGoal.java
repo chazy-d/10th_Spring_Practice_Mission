@@ -12,7 +12,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.YearMonth;
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "region_goal")
 public class RegionGoal extends BaseTimeEntity {
@@ -40,16 +42,4 @@ public class RegionGoal extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id", nullable = false)
 	private Region region;
-
-	public Long getId() {
-		return id;
-	}
-
-	public Integer getGoalMissionCount() {
-		return goalMissionCount;
-	}
-
-	public Integer getRewardPoint() {
-		return rewardPoint;
-	}
 }

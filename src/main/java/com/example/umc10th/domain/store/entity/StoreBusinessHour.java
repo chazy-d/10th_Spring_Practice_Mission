@@ -14,7 +14,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalTime;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "store_business_hour")
 public class StoreBusinessHour extends BaseTimeEntity {

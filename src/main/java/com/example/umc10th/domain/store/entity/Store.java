@@ -13,7 +13,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "store")
 public class Store extends BaseTimeEntity {
@@ -42,12 +44,4 @@ public class Store extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "primary_food_category_id")
 	private FoodCategory primaryFoodCategory;
-
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
 }

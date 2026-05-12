@@ -15,7 +15,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.Getter;
 
+@Getter
 @Entity
 @Table(name = "member_mission")
 public class MemberMission extends BaseTimeEntity {
@@ -51,32 +53,4 @@ public class MemberMission extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
-
-	public Long getId() {
-		return id;
-	}
-
-	public MemberMissionStatus getStatus() {
-		return status;
-	}
-
-	public Mission getMission() {
-		return mission;
-	}
-
-	public Member getMember() {
-		return member;
-	}
-
-	public LocalDateTime getStartedAt() {
-		return startedAt;
-	}
-
-	public LocalDateTime getSuccessRequestedAt() {
-		return successRequestedAt;
-	}
-
-	public LocalDateTime getCompletedAt() {
-		return completedAt;
-	}
 }
