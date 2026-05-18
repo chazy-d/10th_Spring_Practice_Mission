@@ -55,6 +55,9 @@ public class Member extends BaseTimeEntity {
 	@Column(length = 100, unique = true)
 	private String email;
 
+	@Column(name = "password_hash", length = 255)
+	private String passwordHash;
+
 	@Column(name = "phone_number", length = 20)
 	private String phoneNumber;
 
@@ -66,4 +69,37 @@ public class Member extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
 	private List<MemberTermAgreement> memberTermAgreements = new ArrayList<>();
+
+	protected Member() {
+	}
+
+	private Member(
+		String name,
+		String nickname,
+		Gender gender,
+		LocalDate birth,
+		String email,
+		String passwordHash,
+		String phoneNumber
+	) {
+		this.name = name;
+		this.nickname = nickname;
+		this.gender = gender != null ? gender : Gender.NONE;
+		this.birth = birth;
+		this.email = email;
+		this.passwordHash = passwordHash;
+		this.phoneNumber = phoneNumber;
+	}
+
+	public static Member createLocal(
+		String name,
+		String nickname,
+		Gender gender,
+		LocalDate birth,
+		String email,
+		String passwordHash,
+		String phoneNumber
+	) {
+		return new Member(name, nickname, gender, birth, email, passwordHash, phoneNumber);
+	}
 }
