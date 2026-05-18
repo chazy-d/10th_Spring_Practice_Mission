@@ -8,6 +8,9 @@ import com.example.umc10th.domain.mission.exception.code.MissionSuccessCode;
 import com.example.umc10th.domain.mission.service.MemberMissionService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,10 +28,17 @@ public class MemberMissionQueryController {
 
 	@GetMapping("/api/member-missions")
 	public ApiResponse<MemberMissionListResponseDto> getMemberMissions(
-		@RequestParam Long memberId,
+		@RequestParam
+		@Positive(message = "회원 ID는 양수여야 합니다.")
+		Long memberId,
 		@RequestParam MemberMissionStatus status,
-		@RequestParam(required = false) Long cursor,
-		@RequestParam Integer size
+		@RequestParam(required = false)
+		@Positive(message = "커서는 양수여야 합니다.")
+		Long cursor,
+		@RequestParam
+		@Min(value = 1, message = "조회 크기는 1 이상이어야 합니다.")
+		@Max(value = 50, message = "조회 크기는 최대 50까지 가능합니다.")
+		Integer size
 	) {
 		MemberMissionListResponseDto response = memberMissionService.getMemberMissions(memberId, status, cursor, size);
 
@@ -38,8 +48,13 @@ public class MemberMissionQueryController {
 	@PostMapping("/api/member-missions/in-progress")
 	public ApiResponse<MemberMissionOffsetPageResponseDto> getInProgressMemberMissions(
 		@Valid @RequestBody MemberMissionInProgressRequestDto request,
-		@RequestParam(defaultValue = "0") Integer pageNumber,
-		@RequestParam(defaultValue = "10") Integer pageSize
+		@RequestParam(defaultValue = "0")
+		@Min(value = 0, message = "페이지 번호는 0 이상이어야 합니다.")
+		Integer pageNumber,
+		@RequestParam(defaultValue = "10")
+		@Min(value = 1, message = "페이지 크기는 1 이상이어야 합니다.")
+		@Max(value = 50, message = "페이지 크기는 최대 50까지 가능합니다.")
+		Integer pageSize
 	) {
 		MemberMissionOffsetPageResponseDto response = memberMissionService.getInProgressMemberMissions(
 			request.memberId(),

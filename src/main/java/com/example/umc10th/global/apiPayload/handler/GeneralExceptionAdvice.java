@@ -4,6 +4,7 @@ import com.example.umc10th.global.apiPayload.ApiResponse;
 import com.example.umc10th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc10th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc10th.global.apiPayload.exception.ProjectException;
+import jakarta.validation.ConstraintViolationException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @RestControllerAdvice
@@ -44,6 +46,42 @@ public class GeneralExceptionAdvice {
 		exception.getBindingResult()
 			.getFieldErrors()
 			.forEach(error -> errors.putIfAbsent(error.getField(), error.getDefaultMessage()));
+
+		BaseErrorCode errorCode = GeneralErrorCode.BAD_REQUEST;
+		return ResponseEntity
+			.status(errorCode.getStatus())
+			.body(ApiResponse.onFailure(errorCode, errors));
+	}
+
+	@ExceptionHandler(HandlerMethodValidationException.class)
+	public ResponseEntity<ApiResponse<Map<String, String>>> handleHandlerMethodValidationException(
+		HandlerMethodValidationException exception
+	) {
+		Map<String, String> errors = new LinkedHashMap<>();
+		exception.getParameterValidationResults()
+			.forEach(result -> {
+				String parameterName = result.getMethodParameter().getParameterName();
+				String key = parameterName != null ? parameterName : "parameter";
+				result.getResolvableErrors()
+					.forEach(error -> errors.putIfAbsent(key, error.getDefaultMessage()));
+			});
+
+		BaseErrorCode errorCode = GeneralErrorCode.BAD_REQUEST;
+		return ResponseEntity
+			.status(errorCode.getStatus())
+			.body(ApiResponse.onFailure(errorCode, errors));
+	}
+
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ApiResponse<Map<String, String>>> handleConstraintViolationException(
+		ConstraintViolationException exception
+	) {
+		Map<String, String> errors = new LinkedHashMap<>();
+		exception.getConstraintViolations()
+			.forEach(violation -> errors.putIfAbsent(
+				violation.getPropertyPath().toString(),
+				violation.getMessage()
+			));
 
 		BaseErrorCode errorCode = GeneralErrorCode.BAD_REQUEST;
 		return ResponseEntity
