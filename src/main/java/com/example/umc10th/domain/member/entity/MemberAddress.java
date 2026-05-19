@@ -49,4 +49,22 @@ public class MemberAddress extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "region_id", nullable = false)
 	private Region region;
+
+	public static MemberAddress create(
+		Member member,
+		Region region,
+		String address,
+		String detailAddress
+	) {
+		MemberAddress memberAddress = new MemberAddress();
+		memberAddress.member = member;
+		memberAddress.region = region;
+		memberAddress.addressName = "기본 주소";
+		memberAddress.address = address;
+		memberAddress.detailAddress = detailAddress;
+		memberAddress.isDefault = true;
+		memberAddress.isCurrent = true;
+		memberAddress.lastSelectedAt = LocalDateTime.now();
+		return memberAddress;
+	}
 }

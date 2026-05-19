@@ -29,4 +29,11 @@ public class MemberFoodCategory extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "food_category_id", nullable = false)
 	private FoodCategory foodCategory;
+
+	public static MemberFoodCategory create(Member member, FoodCategory foodCategory) {
+		MemberFoodCategory memberFoodCategory = new MemberFoodCategory();
+		memberFoodCategory.member = member;
+		memberFoodCategory.foodCategory = foodCategory;
+		return memberFoodCategory;
+	}
 }

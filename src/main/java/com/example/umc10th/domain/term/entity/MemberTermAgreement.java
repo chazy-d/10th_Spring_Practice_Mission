@@ -36,4 +36,13 @@ public class MemberTermAgreement extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "term_id", nullable = false)
 	private Term term;
+
+	public static MemberTermAgreement create(Member member, Term term, boolean isAgreed) {
+		MemberTermAgreement memberTermAgreement = new MemberTermAgreement();
+		memberTermAgreement.member = member;
+		memberTermAgreement.term = term;
+		memberTermAgreement.isAgreed = isAgreed;
+		memberTermAgreement.agreedAt = LocalDateTime.now();
+		return memberTermAgreement;
+	}
 }
