@@ -1,0 +1,26 @@
+package com.example.umc10th.global.security;
+
+import com.example.umc10th.domain.member.repository.MemberRepository;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class CustomUserDetailsService implements UserDetailsService {
+
+	private final MemberRepository memberRepository;
+
+	public CustomUserDetailsService(MemberRepository memberRepository) {
+		this.memberRepository = memberRepository;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+		return memberRepository.findByEmail(email)
+			.map(AuthMember::from)
+			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
+	}
+}
