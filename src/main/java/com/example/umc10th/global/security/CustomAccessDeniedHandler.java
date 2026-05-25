@@ -5,18 +5,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
 	private final SecurityErrorResponseWriter responseWriter;
-
-	public CustomAccessDeniedHandler(SecurityErrorResponseWriter responseWriter) {
-		this.responseWriter = responseWriter;
-	}
 
 	@Override
 	public void handle(

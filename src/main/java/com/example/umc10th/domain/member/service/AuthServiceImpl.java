@@ -29,11 +29,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
 	private final MemberRepository memberRepository;
@@ -44,26 +46,6 @@ public class AuthServiceImpl implements AuthService {
 	private final FoodCategoryRepository foodCategoryRepository;
 	private final MemberFoodCategoryRepository memberFoodCategoryRepository;
 	private final PasswordEncoder passwordEncoder;
-
-	public AuthServiceImpl(
-		MemberRepository memberRepository,
-		RegionRepository regionRepository,
-		MemberAddressRepository memberAddressRepository,
-		TermRepository termRepository,
-		MemberTermAgreementRepository memberTermAgreementRepository,
-		FoodCategoryRepository foodCategoryRepository,
-		MemberFoodCategoryRepository memberFoodCategoryRepository,
-		PasswordEncoder passwordEncoder
-	) {
-		this.memberRepository = memberRepository;
-		this.regionRepository = regionRepository;
-		this.memberAddressRepository = memberAddressRepository;
-		this.termRepository = termRepository;
-		this.memberTermAgreementRepository = memberTermAgreementRepository;
-		this.foodCategoryRepository = foodCategoryRepository;
-		this.memberFoodCategoryRepository = memberFoodCategoryRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
 
 	@Override
 	@Transactional

@@ -2,6 +2,7 @@ package com.example.umc10th.global.config;
 
 import com.example.umc10th.global.security.CustomAccessDeniedHandler;
 import com.example.umc10th.global.security.CustomAuthenticationEntryPoint;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -12,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
 	private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
@@ -25,14 +27,6 @@ public class SecurityConfig {
 		"/v3/api-docs/**",
 		"/error"
 	};
-
-	public SecurityConfig(
-		CustomAuthenticationEntryPoint customAuthenticationEntryPoint,
-		CustomAccessDeniedHandler customAccessDeniedHandler
-	) {
-		this.customAuthenticationEntryPoint = customAuthenticationEntryPoint;
-		this.customAccessDeniedHandler = customAccessDeniedHandler;
-	}
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
