@@ -24,7 +24,6 @@ import com.example.umc10th.domain.term.exception.TermException;
 import com.example.umc10th.domain.term.exception.code.TermErrorCode;
 import com.example.umc10th.domain.term.repository.MemberTermAgreementRepository;
 import com.example.umc10th.domain.term.repository.TermRepository;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -104,17 +103,13 @@ public class AuthServiceImpl implements AuthService {
 			.map(foodCategory -> MemberFoodCategory.create(savedMember, foodCategory))
 			.toList());
 
-		LocalDateTime createdAt = savedMember.getCreatedAt() != null
-			? savedMember.getCreatedAt()
-			: LocalDateTime.now();
-
 		return new SignupResponseDto(
 			savedMember.getId(),
 			savedMember.getNickname(),
 			request.regionId(),
 			savedMember.getEmail(),
 			savedMember.getPhoneNumber(),
-			createdAt
+			savedMember.getCreatedAt()
 		);
 	}
 
