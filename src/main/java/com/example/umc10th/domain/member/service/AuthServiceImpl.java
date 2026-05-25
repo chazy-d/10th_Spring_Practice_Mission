@@ -57,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
 		Region region = regionRepository.findById(request.regionId())
 			.orElseThrow(() -> new RegionException(RegionErrorCode.REGION_NOT_FOUND));
 		Map<Long, Boolean> termAgreementMap = toTermAgreementMap(request.terms());
-		List<Term> terms = findTermsAndValidateRequired(termAgreementMap);
+		List<TermAgreementDecision> termAgreements = resolveTermAgreements(termAgreementMap);
 		List<FoodCategory> foodCategories = findFoodCategories(request.favoriteFoodCategoryIds());
 
 		String passwordHash = passwordEncoder.encode(request.password());
@@ -78,8 +78,12 @@ public class AuthServiceImpl implements AuthService {
 			request.address(),
 			request.addressDetail()
 		));
-		memberTermAgreementRepository.saveAll(terms.stream()
-			.map(term -> MemberTermAgreement.create(savedMember, term, termAgreementMap.get(term.getId())))
+		memberTermAgreementRepository.saveAll(termAgreements.stream()
+			.map(termAgreement -> MemberTermAgreement.create(
+				savedMember,
+				termAgreement.term(),
+				termAgreement.isAgreed()
+			))
 			.toList());
 		memberFoodCategoryRepository.saveAll(foodCategories.stream()
 			.map(foodCategory -> MemberFoodCategory.create(savedMember, foodCategory))
@@ -103,7 +107,7 @@ public class AuthServiceImpl implements AuthService {
 		return termAgreementMap;
 	}
 
-	private List<Term> findTermsAndValidateRequired(Map<Long, Boolean> termAgreementMap) {
+	private List<TermAgreementDecision> resolveTermAgreements(Map<Long, Boolean> termAgreementMap) {
 		List<Term> allTerms = termRepository.findAll();
 		Map<Long, Term> termById = allTerms.stream()
 			.collect(Collectors.toMap(Term::getId, Function.identity()));
@@ -114,16 +118,21 @@ public class AuthServiceImpl implements AuthService {
 			}
 		}
 
-		for (Term term : allTerms) {
-			if (Boolean.TRUE.equals(term.getIsRequired())
-				&& !Boolean.TRUE.equals(termAgreementMap.get(term.getId()))) {
-				throw new MemberException(MemberErrorCode.REQUIRED_TERM_NOT_AGREED);
-			}
-		}
-
-		return termAgreementMap.keySet().stream()
-			.map(termById::get)
+		return allTerms.stream()
+			.map(term -> {
+				boolean isAgreed = Boolean.TRUE.equals(termAgreementMap.get(term.getId()));
+				if (Boolean.TRUE.equals(term.getIsRequired()) && !isAgreed) {
+					throw new MemberException(MemberErrorCode.REQUIRED_TERM_NOT_AGREED);
+				}
+				return new TermAgreementDecision(term, isAgreed);
+			})
 			.toList();
+	}
+
+	private record TermAgreementDecision(
+		Term term,
+		boolean isAgreed
+	) {
 	}
 
 	private List<FoodCategory> findFoodCategories(List<Long> favoriteFoodCategoryIds) {

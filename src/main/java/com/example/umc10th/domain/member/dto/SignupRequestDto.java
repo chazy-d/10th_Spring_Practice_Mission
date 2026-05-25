@@ -51,7 +51,7 @@ public record SignupRequestDto(
 	@NotEmpty(message = "약관 동의 목록은 최소 1개 이상이어야 합니다.")
 	List<TermAgreementRequest> terms,
 
-	@NotEmpty(message = "선호 음식 카테고리는 최소 1개 이상 선택해야 합니다.")
+	@NotNull(message = "선호 음식 카테고리 목록은 필수입니다.")
 	List<
 		@NotNull(message = "선호 음식 카테고리 ID는 필수입니다.")
 		@Positive(message = "선호 음식 카테고리 ID는 양수여야 합니다.")
