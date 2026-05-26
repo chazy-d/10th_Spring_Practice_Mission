@@ -1,4 +1,4 @@
-package com.example.umc10th.domain.member.dto;
+package com.example.umc10th.domain.auth.dto;
 
 import java.time.LocalDateTime;
 

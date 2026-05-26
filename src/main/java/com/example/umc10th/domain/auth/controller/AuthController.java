@@ -1,9 +1,9 @@
-package com.example.umc10th.domain.member.controller;
+package com.example.umc10th.domain.auth.controller;
 
-import com.example.umc10th.domain.member.dto.SignupRequestDto;
-import com.example.umc10th.domain.member.dto.SignupResponseDto;
+import com.example.umc10th.domain.auth.dto.SignupRequestDto;
+import com.example.umc10th.domain.auth.dto.SignupResponseDto;
+import com.example.umc10th.domain.auth.service.AuthService;
 import com.example.umc10th.domain.member.exception.code.MemberSuccessCode;
-import com.example.umc10th.domain.member.service.AuthService;
 import com.example.umc10th.global.apiPayload.ApiResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

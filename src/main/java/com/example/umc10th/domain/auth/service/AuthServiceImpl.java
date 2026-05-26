@@ -1,4 +1,4 @@
-package com.example.umc10th.domain.member.service;
+package com.example.umc10th.domain.auth.service;
 
 import com.example.umc10th.domain.category.entity.FoodCategory;
 import com.example.umc10th.domain.category.entity.mapping.MemberFoodCategory;
@@ -6,8 +6,8 @@ import com.example.umc10th.domain.category.exception.CategoryException;
 import com.example.umc10th.domain.category.exception.code.CategoryErrorCode;
 import com.example.umc10th.domain.category.repository.FoodCategoryRepository;
 import com.example.umc10th.domain.category.repository.MemberFoodCategoryRepository;
-import com.example.umc10th.domain.member.dto.SignupRequestDto;
-import com.example.umc10th.domain.member.dto.SignupResponseDto;
+import com.example.umc10th.domain.auth.dto.SignupRequestDto;
+import com.example.umc10th.domain.auth.dto.SignupResponseDto;
 import com.example.umc10th.domain.member.entity.Member;
 import com.example.umc10th.domain.member.entity.MemberAddress;
 import com.example.umc10th.domain.member.exception.MemberException;
