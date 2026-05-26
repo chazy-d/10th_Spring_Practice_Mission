@@ -19,3 +19,9 @@ spring:
         format_sql: true # ???? SQL ??? ?? ?? ???
         query:
           fail_on_pagination_over_collection_fetch: true
+
+jwt:
+  token:
+    secretKey: ${JWT_SECRET_KEY}
+    expiration:
+      access: 1800000 # 30분
