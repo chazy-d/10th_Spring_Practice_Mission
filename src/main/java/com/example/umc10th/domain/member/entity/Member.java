@@ -91,6 +91,22 @@ public class Member extends BaseTimeEntity {
 		this.phoneNumber = phoneNumber;
 	}
 
+	private Member(
+		SocialType socialType,
+		String socialUid,
+		String email,
+		String nickname,
+		String profileImageUrl
+	) {
+		this.name = nickname;
+		this.nickname = nickname;
+		this.gender = Gender.NONE;
+		this.socialType = socialType;
+		this.socialUid = socialUid;
+		this.email = email;
+		this.profileImageUrl = profileImageUrl;
+	}
+
 	public static Member createLocal(
 		String name,
 		String nickname,
@@ -101,5 +117,15 @@ public class Member extends BaseTimeEntity {
 		String phoneNumber
 	) {
 		return new Member(name, nickname, gender, birth, email, passwordHash, phoneNumber);
+	}
+
+	public static Member createSocial(
+		SocialType socialType,
+		String socialUid,
+		String email,
+		String nickname,
+		String profileImageUrl
+	) {
+		return new Member(socialType, socialUid, email, nickname, profileImageUrl);
 	}
 }
