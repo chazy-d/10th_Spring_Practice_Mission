@@ -1,5 +1,7 @@
 package com.example.umc10th.global.config;
 
+import com.example.umc10th.domain.auth.oauth.CustomOAuthService;
+import com.example.umc10th.domain.auth.oauth.OAuthSuccessHandler;
 import com.example.umc10th.global.security.CustomAccessDeniedHandler;
 import com.example.umc10th.global.security.CustomAuthenticationEntryPoint;
 import com.example.umc10th.global.security.CustomUserDetailsService;
@@ -25,6 +27,8 @@ public class SecurityConfig {
 	private final CustomAccessDeniedHandler customAccessDeniedHandler;
 	private final JwtUtil jwtUtil;
 	private final CustomUserDetailsService customUserDetailsService;
+	private final CustomOAuthService customOAuthService;
+	private final OAuthSuccessHandler oAuthSuccessHandler;
 
 	private static final String[] PUBLIC_URLS = {
 		"/api/auth/**",
@@ -43,6 +47,18 @@ public class SecurityConfig {
 				.anyRequest().authenticated()
 			)
 			.formLogin(AbstractHttpConfigurer::disable)
+			.oauth2Login(oauth2 -> oauth2
+				.authorizationEndpoint(authorization -> authorization
+					.baseUri("/oauth2/authorization")
+				)
+				.redirectionEndpoint(redirection -> redirection
+					.baseUri("/login/oauth2/code/*")
+				)
+				.userInfoEndpoint(userInfo -> userInfo
+					.userService(customOAuthService)
+				)
+				.successHandler(oAuthSuccessHandler)
+			)
 			.sessionManagement(AbstractHttpConfigurer::disable)
 			.addFilterBefore(jwtAuthFilter(), UsernamePasswordAuthenticationFilter.class)
 			.exceptionHandling(exceptionHandling -> exceptionHandling

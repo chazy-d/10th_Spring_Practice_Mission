@@ -1,0 +1,16 @@
+package com.example.umc10th.domain.auth.oauth.dto;
+
+import com.example.umc10th.domain.member.enums.SocialType;
+
+public interface OAuthDTO {
+
+	SocialType socialType();
+
+	String socialUid();
+
+	String email();
+
+	String nickname();
+
+	String profileImageUrl();
+}
