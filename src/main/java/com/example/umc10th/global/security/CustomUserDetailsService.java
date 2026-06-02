@@ -21,4 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 			.map(AuthMember::from)
 			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
 	}
+
+	@Transactional(readOnly = true)
+	public UserDetails loadUserByMemberId(Long memberId) throws UsernameNotFoundException {
+		return memberRepository.findById(memberId)
+			.map(AuthMember::from)
+			.orElseThrow(() -> new UsernameNotFoundException("회원을 찾을 수 없습니다."));
+	}
 }
