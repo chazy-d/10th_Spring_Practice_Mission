@@ -36,6 +36,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +55,7 @@ public class AuthServiceImpl implements AuthService {
 	private final MemberTermAgreementRepository memberTermAgreementRepository;
 	private final FoodCategoryRepository foodCategoryRepository;
 	private final MemberFoodCategoryRepository memberFoodCategoryRepository;
+	private final AuthenticationManager authenticationManager;
 	private final PasswordEncoder passwordEncoder;
 	private final JwtUtil jwtUtil;
 
@@ -109,15 +114,16 @@ public class AuthServiceImpl implements AuthService {
 	@Override
 	@Transactional(readOnly = true)
 	public LoginResponseDto login(LoginRequestDto request) {
-		Member member = memberRepository.findByEmail(request.email())
-			.orElseThrow(() -> new AuthException(AuthErrorCode.INVALID_LOGIN));
-
-		if (!passwordEncoder.matches(request.password(), member.getPasswordHash())) {
+		try {
+			Authentication authentication = authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(request.email(), request.password())
+			);
+			AuthMember authMember = (AuthMember) authentication.getPrincipal();
+			String accessToken = jwtUtil.createAccessToken(authMember);
+			return new LoginResponseDto(accessToken);
+		} catch (AuthenticationException e) {
 			throw new AuthException(AuthErrorCode.INVALID_LOGIN);
 		}
-
-		String accessToken = jwtUtil.createAccessToken(AuthMember.from(member));
-		return new LoginResponseDto(accessToken);
 	}
 
 	private Map<Long, Boolean> toTermAgreementMap(List<SignupRequestDto.TermAgreementRequest> terms) {
